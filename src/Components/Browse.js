@@ -1,28 +1,29 @@
 import { useEffect, useState } from "react";
-import food from '../icons/food.png'
-import fuel from '../icons/fuel.png'
-import wallet from '../icons/wallet.png'
-import expense from '../icons/spending.png'
-import income from '../icons/salary.png'
-
-
+import food from "../icons/food.png";
+import fuel from "../icons/fuel.png";
+import wallet from "../icons/wallet.png";
+import expense from "../icons/spending.png";
+import income from "../icons/salary.png";
 
 const monthOnClick = (month, setMonthSelected) => {
   setMonthSelected(month);
   console.log("hello");
 };
 
-const getImageForCategory=(category)=>{
+const getImageForCategory = (category) => {
   const imgDict = {
-    fuel:fuel,
-    food:food
-  }
-  return imgDict[category] || "https://static.vecteezy.com/system/resources/previews/006/059/910/original/dollar-icon-american-currency-symbol-illustration-usd-coin-free-vector.jpg"
-}
+    fuel: fuel,
+    food: food,
+  };
+  return (
+    imgDict[category] ||
+    "https://static.vecteezy.com/system/resources/previews/006/059/910/original/dollar-icon-american-currency-symbol-illustration-usd-coin-free-vector.jpg"
+  );
+};
 
 const getMonthData = (monthSetter) => {
   const data = ["January", "February", "March"];
-  
+
   monthSetter(data);
 };
 const toggleDropDown = () => {
@@ -65,8 +66,7 @@ const Browse = () => {
         className=" w-50 h-9 fixed 
     inset-x-0 
     bottom-0"
-      >
-      </div>
+      ></div>
       <div className="topNav w-50 h-9">
         <div className="flex flex-col gap-4 absolute py-2 font-bold left-10 top-0 w-20">
           <div className="flex w-28">
@@ -107,26 +107,31 @@ const Browse = () => {
         </div>
       </div>
       <div className=" h-40 w-full mb-3 flex justify-center items-center">
-      <div className='w-96 h-36 bg-red-300 flex justify-between items-center rounded-md p-4'>
-        <div>
-        <h1 className='font-bold'>Balance</h1> 
-        <h2 className='font-bold'>$1892</h2>
-        </div>
-        <div>
-          <img src={wallet} className='w-28 h-28'
-           alt="category logo"></img>
-        </div>
+        <div className="w-96 h-36 bg-red-300 flex justify-between items-center rounded-md p-4">
+          <div>
+            <h1 className="font-bold">Balance</h1>
+            <h2 className="font-bold">$1892</h2>
+          </div>
+          <div>
+            <img src={wallet} className="w-28 h-28" alt="category logo"></img>
+          </div>
         </div>
       </div>
       <div className=" w-svw h-24 flex  ">
         <div className="bg-pink-600 w-1/2 h-24 mr-1 flex justify-center  rounded-md items-center">
-        <img src={income} className='w-24 h-24'
-           alt="category logo"></img>
+          <img src={income} className="w-24 h-24" alt="category logo"></img>
         </div>
         <div className="bg-blue-600 w-1/2 h-24  ml-1 flex justify-center  rounded-md items-center">
-        <img src={expense} className='w-24 h-24'
-           alt="category logo"></img>
+          <img src={expense} className="w-24 h-24" alt="category logo"></img>
         </div>
+      </div>
+      <div className="flex justify-center mt-4">
+        <button
+          className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => document.getElementById("my_modal_1").showModal()}
+        >
+          Add Expense
+        </button>
       </div>
       {Object.keys(monthData).map((item) => {
         return (
@@ -136,20 +141,46 @@ const Browse = () => {
               return (
                 <div className="flex justify-center align-center items-center bg-red-50">
                   {
-                  <img
-                 className="w-6 h-6"
-                 src={getImageForCategory(dataItem.category)}
-                 alt="category logo"
-               ></img>
+                    <img
+                      className="w-6 h-6"
+                      src={getImageForCategory(dataItem.category)}
+                      alt="category logo"
+                    ></img>
                   }
-                 <p className="m-2.5 capitalize w-28">{dataItem.category}</p>
-                 <p className="mx-3.5 w-24">${dataItem.amount}</p>
+                  <p className="m-2.5 capitalize w-28">{dataItem.category}</p>
+                  <p className="mx-3.5 w-24">${dataItem.amount}</p>
                 </div>
               );
             })}
           </div>
         );
       })}
+
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Add a new expense</h3>
+          <input
+            type="text"
+            placeholder="Expense name"
+            className=" mt-4 input input-bordered w-full max-w-xs"
+          />
+          <select className="mt-4 select select-bordered w-full max-w-xs">
+            <option disabled selected>
+              Select expense category
+            </option>
+            <option>Fuel</option>
+            <option>Food</option>
+            <option>Entertainment</option>
+          </select>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn mr-4">Add</button>
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
